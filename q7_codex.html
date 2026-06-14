@@ -1,0 +1,1459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q7 Codex • OBDeleven Mods | Audi Q7 Premium Plus</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Space+Grotesk:wght@500;600&amp;display=swap');
+        
+        :root {
+            --audi-red: #C8102E;
+        }
+        
+        body {
+            font-family: 'Inter', system_ui, sans-serif;
+        }
+        
+        .heading-font {
+            font-family: 'Space Grotesk', 'Inter', system_ui, sans-serif;
+            font-weight: 600;
+            letter-spacing: -0.025em;
+        }
+
+        .premium-black {
+            background-color: #0a0a0a;
+        }
+
+        .audi-card {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            background: linear-gradient(145deg, #111111 0%, #0a0a0a 100%);
+            border: 1px solid #1f1f1f;
+        }
+
+        .audi-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            border-color: #3f3f3f;
+        }
+
+        .audi-red {
+            color: #C8102E;
+        }
+
+        .section-header {
+            font-size: 2.25rem;
+            line-height: 2.5rem;
+            font-weight: 600;
+            letter-spacing: -0.04em;
+        }
+
+        .mod-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mod-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(to right, #C8102E, transparent);
+            opacity: 0.7;
+        }
+
+        .nav-active {
+            color: white;
+            border-bottom: 2px solid #C8102E;
+        }
+
+        .filter-pill {
+            transition: all 0.1s ease;
+        }
+
+        .filter-pill.active {
+            background-color: #C8102E;
+            color: white;
+            border-color: #C8102E;
+        }
+
+        .modal {
+            animation: modalPop 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes modalPop {
+            from {
+                opacity: 0;
+                transform: scale(0.95) translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .premium-shadow {
+            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.4);
+        }
+
+        .audi-grid {
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+
+        .status-badge {
+            font-size: 0.65rem;
+            letter-spacing: 0.5px;
+        }
+
+        .metric {
+            font-variant-numeric: tabular-nums;
+        }
+
+        .luxury-text {
+            background: linear-gradient(90deg, #f1f1f1, #d1d1d1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="premium-black text-zinc-200">
+    <!-- NAV -->
+    <nav class="sticky top-0 z-50 border-b border-zinc-800 bg-[#0a0a0a]/95 backdrop-blur-xl">
+        <div class="max-w-screen-2xl mx-auto">
+            <div class="px-8 py-5 flex items-center justify-between">
+                <div class="flex items-center gap-x-4">
+                    <!-- Audi-inspired logo -->
+                    <div class="flex items-center gap-x-3">
+                        <div class="w-9 h-9 rounded-full border-2 border-[#C8102E] flex items-center justify-center relative">
+                            <div class="w-5 h-5 rounded-full border border-[#C8102E]"></div>
+                            <div class="absolute w-9 h-9 rounded-full border border-[#C8102E] opacity-30"></div>
+                        </div>
+                        <div>
+                            <span class="heading-font text-3xl font-semibold tracking-tighter">Q7</span>
+                            <span class="text-[10px] font-mono tracking-[3px] text-zinc-500 block -mt-1">CODEX</span>
+                        </div>
+                    </div>
+                    <div class="hidden md:block pl-4 border-l border-zinc-800">
+                        <div class="flex items-center gap-x-2">
+                            <span class="px-3 py-1 text-xs font-medium bg-zinc-900 border border-zinc-700 rounded-full flex items-center gap-x-1.5">
+                                <i class="fa-solid fa-check text-emerald-400 text-xs"></i>
+                                <span class="text-emerald-400 text-xs font-semibold">PREMIUM PLUS</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-x-8 text-sm">
+                    <a href="#discover" class="hover:text-white text-zinc-400 transition-colors">Discover</a>
+                    <a href="#mods" class="hover:text-white text-zinc-400 transition-colors">Mods</a>
+                    <a href="#guide" class="hover:text-white text-zinc-400 transition-colors">Success Guide</a>
+                    <div class="h-6 w-px bg-zinc-800"></div>
+                    <div onclick="showGarage()" class="flex items-center gap-x-2 px-4 py-2 rounded-2xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 cursor-pointer transition-all active:scale-[0.985]">
+                        <i class="fa-solid fa-garage text-[#C8102E]"></i>
+                        <span class="font-medium text-sm">My Garage</span>
+                        <span id="garage-count" class="px-2 py-px text-[10px] font-mono bg-zinc-800 rounded-full">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <header id="discover" class="max-w-screen-2xl mx-auto px-8 pt-16 pb-20">
+        <div class="max-w-4xl">
+            <div class="inline-flex items-center gap-x-2 px-4 py-1.5 rounded-3xl bg-zinc-900 border border-zinc-800 mb-6">
+                <div class="w-2 h-2 bg-[#C8102E] rounded-full animate-pulse"></div>
+                <span class="text-xs uppercase tracking-[1.5px] font-semibold text-zinc-400">2026 FLAGSHIP SUV</span>
+            </div>
+            
+            <h1 class="heading-font text-7xl md:text-7xl leading-[1.05] tracking-tighter font-semibold">
+                Elevate the<br>
+                <span class="luxury-text">Q7 Premium Plus.</span>
+            </h1>
+            
+            <p class="mt-6 max-w-md text-xl text-zinc-400">
+                Precision OBDeleven coding for the discerning driver. 
+                Unlock hidden potential while preserving the refined character of your Audi.
+            </p>
+            
+            <div class="flex items-center gap-x-4 mt-10">
+                <button onclick="document.getElementById('mods').scrollIntoView({ behavior: 'smooth' })" 
+                        class="px-8 py-4 rounded-3xl bg-white text-black font-semibold flex items-center gap-x-3 hover:bg-zinc-100 active:scale-[0.985] transition-all shadow-xl shadow-black/50">
+                    <span>Browse Mods</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+                
+                <button onclick="showGettingStarted()" 
+                        class="px-6 py-4 rounded-3xl border border-zinc-700 hover:bg-zinc-900 flex items-center gap-x-2 text-sm font-medium transition-all">
+                    <i class="fa-solid fa-play text-xs"></i>
+                    <span>Getting Started</span>
+                </button>
+            </div>
+            
+            <div class="flex items-center gap-x-8 mt-12 text-xs">
+                <div class="flex items-center gap-x-2 text-zinc-500">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <span>Research-backed • Forum validated</span>
+                </div>
+                <div class="text-zinc-600">•</div>
+                <div class="text-zinc-500">Curated for your <span class="font-medium text-white">2021 Q7 Premium Plus</span> (4M Facelift)</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- STATS BAR -->
+    <div class="border-y border-zinc-800 bg-zinc-950">
+        <div class="max-w-screen-2xl mx-auto px-8 py-5">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center md:text-left">
+                <div>
+                    <div class="text-3xl font-semibold tabular-nums">12</div>
+                    <div class="text-xs text-zinc-500 tracking-widest">CURATED MODS</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-semibold tabular-nums">94k+</div>
+                    <div class="text-xs text-zinc-500 tracking-widest">COMMUNITY INSTALLS</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-semibold">OBDeleven</div>
+                    <div class="text-xs text-zinc-500 tracking-widest">PRO / ULTIMATE RECOMMENDED</div>
+                </div>
+                <div class="hidden md:block">
+                    <div class="inline-flex items-center text-emerald-400 text-sm">
+                        <i class="fa-solid fa-check-double mr-2"></i>
+                        <span class="font-medium">Most popular comfort &amp; presence upgrades</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CHASSIS COMPARISON -->
+    <div class="max-w-screen-2xl mx-auto px-8 pt-8 pb-4 border-t border-zinc-800">
+        <div class="flex items-end justify-between mb-6">
+            <div>
+                <div class="uppercase tracking-[1.5px] text-xs text-[#C8102E] font-semibold">PLATFORM CONTEXT</div>
+                <h3 class="heading-font text-3xl tracking-tighter">4L vs 4M Chassis Differences</h3>
+                <p class="text-zinc-400 mt-1 text-sm">Understanding why coding and mod options differ between generations — and why this Codex is built for your 4M Q7.</p>
+            </div>
+            <div class="hidden md:block text-xs px-4 py-2 bg-zinc-900 border border-zinc-700 rounded-2xl text-emerald-400">
+                <i class="fa-solid fa-car mr-2"></i> Your new Q7 is <span class="font-semibold">4M</span>
+            </div>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-sm border border-zinc-800 rounded-3xl overflow-hidden">
+                <thead>
+                    <tr class="bg-zinc-900">
+                        <th class="text-left px-6 py-4 font-semibold text-zinc-300 w-1/3">Aspect</th>
+                        <th class="text-left px-6 py-4 font-semibold text-zinc-300">4L (2006–2015)</th>
+                        <th class="text-left px-6 py-4 font-semibold text-[#C8102E]">4M (2015–present)</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-zinc-800 text-zinc-300">
+                    <tr class="hover:bg-zinc-950/50">
+                        <td class="px-6 py-4 font-medium text-zinc-400">Platform</td>
+                        <td class="px-6 py-4">PL71 (older)</td>
+                        <td class="px-6 py-4">MLB Evo (modern, shared with Cayenne/Touareg 3)</td>
+                    </tr>
+                    <tr class="hover:bg-zinc-950/50">
+                        <td class="px-6 py-4 font-medium text-zinc-400">Electronics Architecture</td>
+                        <td class="px-6 py-4">Older CAN bus, more isolated modules</td>
+                        <td class="px-6 py-4">Modern networked, higher integration, faster communication</td>
+                    </tr>
+                    <tr class="hover:bg-zinc-950/50">
+                        <td class="px-6 py-4 font-medium text-zinc-400">Infotainment</td>
+                        <td class="px-6 py-4">Older systems, basic hidden menus</td>
+                        <td class="px-6 py-4">MIB2 / MIB3 — Green Menu, RS Monitor, rich features</td>
+                    </tr>
+                    <tr class="hover:bg-zinc-950/50">
+                        <td class="px-6 py-4 font-medium text-zinc-400">OBDeleven One-Click Apps</td>
+                        <td class="px-6 py-4">Limited — mostly manual long coding</td>
+                        <td class="px-6 py-4"><span class="text-emerald-400">Excellent</span> — many dedicated apps for comfort &amp; presence mods</td>
+                    </tr>
+                    <tr class="hover:bg-zinc-950/50">
+                        <td class="px-6 py-4 font-medium text-zinc-400">Needle Sweep / Mirror Dip</td>
+                        <td class="px-6 py-4">Possible via long coding (Module 17 / 46)</td>
+                        <td class="px-6 py-4">Often One-Click + more reliable across software versions</td>
+                    </tr>
+                    <tr class="hover:bg-zinc-950/50">
+                        <td class="px-6 py-4 font-medium text-zinc-400">Start/Stop Deactivation</td>
+                        <td class="px-6 py-4">Primarily Module 46 Comfort System</td>
+                        <td class="px-6 py-4">Gateway (19) adaptations + Comfort module; many One-Click options</td>
+                    </tr>
+                    <tr class="hover:bg-zinc-950/50">
+                        <td class="px-6 py-4 font-medium text-zinc-400">Advanced ADAS (Traffic Jam Assist, etc.)</td>
+                        <td class="px-6 py-4">Not available in comparable form</td>
+                        <td class="px-6 py-4"><span class="text-emerald-400">Full support</span> (with Pre-Sense hardware + correct coding)</td>
+                    </tr>
+                    <tr class="hover:bg-zinc-950/50">
+                        <td class="px-6 py-4 font-medium text-zinc-400">Lighting &amp; Animations</td>
+                        <td class="px-6 py-4">Limited options</td>
+                        <td class="px-6 py-4">Facelift (2020+) supports RS-style taillight sequencing</td>
+                    </tr>
+                    <tr class="hover:bg-zinc-950/50">
+                        <td class="px-6 py-4 font-medium text-zinc-400">Virtual Cockpit Extras</td>
+                        <td class="px-6 py-4">Not available</td>
+                        <td class="px-6 py-4">G-Meter, enhanced displays, RS Monitor fully supported</td>
+                    </tr>
+                    <tr class="hover:bg-zinc-950/50">
+                        <td class="px-6 py-4 font-medium text-zinc-400">Best Tooling Experience</td>
+                        <td class="px-6 py-4">Mature VCDS long coding lists</td>
+                        <td class="px-6 py-4"><span class="text-emerald-400">OBDeleven excels</span> — One-Click + long coding hybrid</td>
+                    </tr>
+                    <tr class="hover:bg-zinc-950/50 bg-zinc-900/40">
+                        <td class="px-6 py-4 font-medium text-zinc-400">Your 2021 Premium Plus</td>
+                        <td class="px-6 py-4 text-zinc-500">—</td>
+                        <td class="px-6 py-4"><span class="font-semibold text-white">4M Facelift (2020+)</span> — the <strong>2020+</strong> year filter is perfect for your car</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="mt-4 text-xs text-zinc-500 max-w-prose">
+            Your 2021 Q7 Premium Plus is a facelift 4M — one of the best years for modern features and coding support. Most mods in this Codex work excellently on 2021 models. The <strong>2020+</strong> year filter highlights the most relevant options for your car (especially lighting and ADAS refinements).
+        </div>
+    </div>
+
+    <!-- QUICK START GUIDE -->
+    <div class="max-w-screen-2xl mx-auto px-8 py-12 border-t border-zinc-800 bg-zinc-950">
+        <div class="max-w-5xl mx-auto">
+            <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-y-4 mb-8">
+                <div>
+                    <div class="uppercase tracking-[1.5px] text-xs text-[#C8102E] font-semibold">FOR YOUR 2021 PREMIUM PLUS</div>
+                    <h3 class="heading-font text-4xl tracking-tighter">Quick Start Guide</h3>
+                    <p class="text-zinc-400 mt-2">The fastest, safest path to meaningful improvements on your facelift 4M Q7.</p>
+                </div>
+                <button onclick="document.getElementById('mods').scrollIntoView({ behavior: 'smooth' }); setTimeout(() => { currentFilter = 'Recommended for 2021'; filterMods(); document.querySelectorAll('#category-filters button').forEach(b => { if (b.textContent.includes('Recommended')) { b.classList.add('active','bg-[#C8102E]','border-[#C8102E]','text-white'); b.classList.remove('border-zinc-700','hover:bg-zinc-900','bg-zinc-950'); } }); }, 600)" 
+                        class="px-6 py-3 rounded-3xl border border-emerald-600 hover:bg-emerald-950 text-emerald-400 flex items-center gap-x-2 text-sm font-medium transition-all active:scale-[0.985]">
+                    <i class="fa-solid fa-star"></i>
+                    <span>Show Recommended Mods</span>
+                </button>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+                <!-- Recommended Quick Starts -->
+                <div class="audi-card border border-zinc-700 rounded-3xl p-6 hover:border-emerald-600/50 transition-all">
+                    <div class="flex items-center gap-x-3 mb-4">
+                        <div class="w-8 h-8 rounded-2xl bg-emerald-900/60 flex items-center justify-center text-emerald-400"><i class="fa-solid fa-power-off"></i></div>
+                        <div class="font-semibold">1. Disable Auto Start/Stop</div>
+                    </div>
+                    <div class="text-sm text-zinc-400 mb-4">The single most popular and satisfying first mod on 2021 Q7s. Engine stays running at stops.</div>
+                    <div class="text-xs text-emerald-400">→ Search “Start Stop” in OBDeleven One-Click Apps</div>
+                </div>
+
+                <div class="audi-card border border-zinc-700 rounded-3xl p-6 hover:border-emerald-600/50 transition-all">
+                    <div class="flex items-center gap-x-3 mb-4">
+                        <div class="w-8 h-8 rounded-2xl bg-emerald-900/60 flex items-center justify-center text-emerald-400"><i class="fa-solid fa-tachometer-alt"></i></div>
+                        <div class="font-semibold">2. Needle Sweep on Ignition</div>
+                    </div>
+                    <div class="text-sm text-zinc-400 mb-4">Instant premium feel. Gauges perform a dramatic sweep every time you start the car — very 2021 RS-like character.</div>
+                    <div class="text-xs text-emerald-400">→ One-Click App or Module 17, Byte 1 Bit 0</div>
+                </div>
+
+                <div class="audi-card border border-zinc-700 rounded-3xl p-6 hover:border-emerald-600/50 transition-all">
+                    <div class="flex items-center gap-x-3 mb-4">
+                        <div class="w-8 h-8 rounded-2xl bg-emerald-900/60 flex items-center justify-center text-emerald-400"><i class="fa-solid fa-mirror"></i></div>
+                        <div class="font-semibold">3. Passenger Mirror Dip</div>
+                    </div>
+                    <div class="text-sm text-zinc-400 mb-4">Extremely practical on a large SUV. Mirror automatically tilts down in reverse for perfect curb view and wheel protection.</div>
+                    <div class="text-xs text-emerald-400">→ Search “Mirror dip” or “Spiegelabsenkung”</div>
+                </div>
+
+                <div class="audi-card border border-zinc-700 rounded-3xl p-6 hover:border-emerald-600/50 transition-all">
+                    <div class="flex items-center gap-x-3 mb-4">
+                        <div class="w-8 h-8 rounded-2xl bg-emerald-900/60 flex items-center justify-center text-emerald-400"><i class="fa-solid fa-chart-line"></i></div>
+                        <div class="font-semibold">4. G-Meter in Virtual Cockpit</div>
+                    </div>
+                    <div class="text-sm text-zinc-400 mb-4">Adds real-time G-force display. Makes your Premium Plus feel more engaging and technical — pairs beautifully with Dynamic mode.</div>
+                    <div class="text-xs text-emerald-400">→ One-Click or Module 17 coding</div>
+                </div>
+            </div>
+
+            <div class="mt-8 grid md:grid-cols-3 gap-5 text-sm">
+                <div class="bg-zinc-900 border border-zinc-700 rounded-3xl p-6">
+                    <div class="font-semibold mb-3 flex items-center gap-x-2"><i class="fa-solid fa-shield-halved text-emerald-400"></i> First Steps (Do These)</div>
+                    <ul class="space-y-2 text-zinc-400 text-sm">
+                        <li>• <strong>Battery Maintainer:</strong> Use a smart 12V AGM-compatible maintainer (5–10A ideal). Recommended: CTEK MXS 5.0 / 7.0, NOCO Genius5/10, or Battery Tender Plus with AGM mode.</li>
+                        <li>• Backup all modules in OBDeleven (critical)</li>
+                        <li>• Start with Easy difficulty mods only</li>
+                        <li>• Do one mod at a time and test thoroughly</li>
+                    </ul>
+                    <div class="mt-3 text-[10px] text-emerald-400/80">Your 2021 Q7 uses an AGM battery — always select AGM mode on the maintainer.</div>
+                </div>
+                <div class="bg-zinc-900 border border-zinc-700 rounded-3xl p-6">
+                    <div class="font-semibold mb-3 flex items-center gap-x-2"><i class="fa-solid fa-check-circle text-emerald-400"></i> Order Recommendation</div>
+                    <ol class="space-y-1.5 text-zinc-400 text-sm list-decimal list-inside">
+                        <li>Start/Stop defeat (biggest daily improvement)</li>
+                        <li>Needle Sweep (instant satisfaction)</li>
+                        <li>Mirror Dip (practical luxury)</li>
+                        <li>G-Meter or Green Menu (next level)</li>
+                    </ol>
+                </div>
+                <div class="bg-zinc-900 border border-zinc-700 rounded-3xl p-6">
+                    <div class="font-semibold mb-3 flex items-center gap-x-2"><i class="fa-solid fa-exclamation-triangle text-amber-400"></i> Pro Tips for 2021</div>
+                    <ul class="space-y-2 text-zinc-400 text-sm">
+                        <li>• 2021 models respond very well to One-Click Apps</li>
+                        <li>• Clear DTCs after every change</li>
+                        <li>• Ignition ON, engine OFF for most coding</li>
+                        <li>• Your facelift lighting supports more animation options</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FILTERS + SEARCH -->
+    <div id="mods" class="max-w-screen-2xl mx-auto px-8 pt-12 pb-6">
+        <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-y-6 mb-8">
+            <div>
+                <h2 class="heading-font text-4xl tracking-tighter">The Collection</h2>
+                <p class="text-zinc-400 mt-1">Hand-selected modifications that respect the Q7's engineering integrity.</p>
+            </div>
+            
+            <!-- Search -->
+            <div class="relative w-full lg:w-80">
+                <i class="fa-solid fa-search absolute left-4 top-3.5 text-zinc-500"></i>
+                <input id="search-input" 
+                       oninput="filterMods()"
+                       type="text" 
+                       placeholder="Search mods (e.g. mirror, DRL, start-stop)" 
+                       class="w-full bg-zinc-900 border border-zinc-700 focus:border-zinc-500 transition-colors pl-11 py-3 rounded-3xl text-sm placeholder:text-zinc-500 outline-none">
+            </div>
+        </div>
+
+        <!-- Category Filters -->
+        <div class="flex flex-wrap gap-2 mb-3" id="category-filters">
+            <!-- Populated by JS -->
+        </div>
+
+        <!-- Year Compatibility Filters -->
+        <div class="mb-8">
+            <div class="flex items-center gap-x-2 mb-2">
+                <span class="text-xs uppercase tracking-widest text-zinc-500 font-medium">Year Compatibility</span>
+                <span class="text-[10px] text-zinc-600">(Select your Q7 model year range)</span>
+            </div>
+            <div class="flex flex-wrap gap-2" id="year-filters">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- MODS GRID -->
+    <div class="max-w-screen-2xl mx-auto px-8 pb-20">
+        <div id="mods-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+            <!-- Populated dynamically by JS -->
+        </div>
+    </div>
+
+    <!-- SUCCESS GUIDE TEASER -->
+    <div id="guide" class="max-w-screen-2xl mx-auto px-8 py-16 border-t border-zinc-800">
+        <div class="max-w-3xl">
+            <div class="uppercase text-xs tracking-[2px] text-[#C8102E] font-semibold mb-3">INSTALLATION MASTERY</div>
+            <h3 class="heading-font text-4xl tracking-tighter">How to succeed with OBDeleven on your Q7</h3>
+            <p class="mt-4 text-zinc-400">These modifications are powerful but require care. Follow these principles for flawless results.</p>
+        </div>
+        
+        <div class="grid md:grid-cols-3 gap-6 mt-10">
+            <div class="audi-card border border-zinc-800 rounded-3xl p-7">
+                <div class="w-9 h-9 flex items-center justify-center bg-zinc-900 rounded-2xl mb-5"><i class="fa-solid fa-microchip text-xl text-[#C8102E]"></i></div>
+                <div class="font-semibold mb-2">1. Prepare Your Environment</div>
+                <ul class="text-sm text-zinc-400 space-y-1.5">
+                    <li>• Use a quality battery maintainer</li>
+                    <li>• Ignition ON, engine OFF</li>
+                    <li>• Strong Bluetooth connection</li>
+                    <li>• Backup original coding first</li>
+                </ul>
+            </div>
+            <div class="audi-card border border-zinc-800 rounded-3xl p-7">
+                <div class="w-9 h-9 flex items-center justify-center bg-zinc-900 rounded-2xl mb-5"><i class="fa-solid fa-list-check text-xl text-[#C8102E]"></i></div>
+                <div class="font-semibold mb-2">2. One Mod at a Time</div>
+                <ul class="text-sm text-zinc-400 space-y-1.5">
+                    <li>• Apply, test thoroughly</li>
+                    <li>• Clear any DTCs after each</li>
+                    <li>• Note your exact software version</li>
+                    <li>• Many are now One-Click Apps</li>
+                </ul>
+            </div>
+            <div class="audi-card border border-zinc-800 rounded-3xl p-7">
+                <div class="w-9 h-9 flex items-center justify-center bg-zinc-900 rounded-2xl mb-5"><i class="fa-solid fa-users text-xl text-[#C8102E]"></i></div>
+                <div class="font-semibold mb-2">3. Community &amp; Verification</div>
+                <ul class="text-sm text-zinc-400 space-y-1.5">
+                    <li>• Cross-reference vag-coding.net</li>
+                    <li>• Check OBDeleven forum for your year</li>
+                    <li>• Reddit r/OBDeleven &amp; Audizine</li>
+                    <li>• Confirm hardware support first</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- DISCLAIMER -->
+    <div class="max-w-screen-2xl mx-auto px-8 pb-12">
+        <div class="text-[10px] text-zinc-500 max-w-prose leading-relaxed border-l-2 border-zinc-800 pl-4">
+            <strong>Important:</strong> Vehicle modifications via diagnostic tools carry inherent risks including potential warranty implications, safety system interference, and legal considerations. 
+            Always verify compatibility with your specific VIN, model year, and market (US-spec). This resource is for educational and reference purposes only. 
+            Perform modifications at your own risk. Professional assistance is strongly recommended for complex or safety-critical changes. 
+            Never disable critical safety features.
+        </div>
+    </div>
+
+    <!-- MODAL -->
+    <div id="modal" onclick="if (event.target.id === 'modal') closeModal()" class="hidden fixed inset-0 bg-black/90 backdrop-blur-xl z-[100] flex items-center justify-center p-4">
+        <div onclick="event.stopImmediatePropagation()" class="modal max-w-3xl w-full max-h-[92vh] overflow-hidden bg-zinc-950 border border-zinc-700 rounded-3xl premium-shadow flex flex-col">
+            <!-- Modal Header -->
+            <div class="px-8 pt-8 pb-5 border-b border-zinc-800 flex items-start justify-between">
+                <div class="flex-1">
+                    <div id="modal-category-badge" class="inline-block text-xs px-3 py-1 rounded-2xl bg-zinc-900 border border-zinc-700 mb-3"></div>
+                    <h3 id="modal-title" class="heading-font text-4xl tracking-tighter pr-8"></h3>
+                    <div class="flex items-center gap-x-3 mt-3 flex-wrap gap-y-1">
+                        <div id="modal-difficulty" class="text-xs px-3 py-1 rounded-full font-medium"></div>
+                        <div id="modal-credits" class="text-xs px-3 py-1 rounded-full bg-zinc-900 border border-zinc-700 font-mono"></div>
+                        <div id="modal-compatibility" class="text-[10px] px-3 py-1 rounded-full bg-zinc-900 border border-zinc-700 font-mono text-zinc-400"></div>
+                    </div>
+                </div>
+                <button onclick="closeModal()" class="text-zinc-400 hover:text-white p-2 -mr-2 -mt-2">
+                    <i class="fa-solid fa-times text-2xl"></i>
+                </button>
+            </div>
+
+            <div class="overflow-y-auto flex-1 p-8 space-y-8 text-sm">
+                <!-- What it does -->
+                <div>
+                    <div class="uppercase tracking-widest text-xs text-zinc-500 mb-3">WHAT IT DOES</div>
+                    <div id="modal-desc" class="text-zinc-200 leading-relaxed"></div>
+                </div>
+
+                <!-- Benefits -->
+                <div>
+                    <div class="uppercase tracking-widest text-xs text-zinc-500 mb-3">BENEFITS &amp; PRESENCE</div>
+                    <div id="modal-benefits" class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 text-sm"></div>
+                </div>
+
+                <!-- Installation -->
+                <div>
+                    <div class="uppercase tracking-widest text-xs text-zinc-500 mb-3 flex items-center gap-x-2">
+                        <span>INSTALLATION WITH OBDELEVEN</span>
+                    </div>
+                    <div id="modal-install" class="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 text-sm leading-relaxed"></div>
+                </div>
+
+                <!-- Tips -->
+                <div>
+                    <div class="uppercase tracking-widest text-xs text-zinc-500 mb-3">SUCCESS TIPS</div>
+                    <div id="modal-tips" class="space-y-2 text-sm text-emerald-300/90"></div>
+                </div>
+
+                <!-- Warnings -->
+                <div id="modal-warnings-wrapper">
+                    <div class="uppercase tracking-widest text-xs text-amber-400 mb-3">IMPORTANT WARNINGS</div>
+                    <div id="modal-warnings" class="text-amber-300/90 text-sm bg-amber-950/30 border border-amber-900/60 rounded-2xl p-5"></div>
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="px-8 py-5 border-t border-zinc-800 bg-zinc-900/60 flex items-center justify-between gap-x-4">
+                <div class="text-xs text-zinc-500">Sources: vag-coding.net • OBDeleven forums • Audizine • r/OBDeleven</div>
+                <div class="flex gap-x-3">
+                    <button onclick="toggleInstallFromModal()" 
+                            id="install-btn"
+                            class="px-6 py-3 text-sm font-semibold rounded-2xl border border-zinc-600 hover:bg-zinc-800 flex items-center gap-x-2 transition-all active:scale-[0.985]">
+                        <i class="fa-solid fa-plus"></i>
+                        <span id="install-btn-text">Mark as Installed</span>
+                    </button>
+                    <button onclick="closeModal()" 
+                            class="px-6 py-3 text-sm font-medium rounded-2xl bg-white text-black hover:bg-zinc-100 active:scale-[0.985]">
+                        Done
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tailwind script
+        function initializeTailwind() {
+            document.documentElement.style.setProperty('--accent', '#C8102E');
+        }
+
+        // Mods Data - Curated for Q7 Premium Plus (4M)
+        const mods = [
+            {
+                id: 1,
+                name: "Auto Start/Stop Default Off",
+                category: "Comfort",
+                difficulty: "Easy",
+                credits: "10-20",
+                shortDesc: "Prevents the engine from auto-shutting off at stops by default. Eliminates the annoying restart jerk.",
+                fullDesc: "Reverses the default behavior so the start-stop system remains inactive unless manually enabled. One of the most requested comfort modifications for Audi owners who dislike the feature's intrusive nature and slight delay on acceleration.",
+                benefits: [
+                    "Smoother urban driving experience",
+                    "Eliminates frequent engine restarts",
+                    "Preserves battery and starter longevity",
+                    "More predictable power delivery"
+                ],
+                install: "Most Q7 4M models support this via <strong>One-Click App</strong> in OBDeleven (search \"Start Stop\"). Alternatively: Module 19 (Gateway) → Adaptations → \"Start / stop start voltage limit\" set to 12.0V (or higher). Some years require Module 46 Comfort System long coding adjustments (Byte 11/15). Test after applying and perform ignition cycle.",
+                tips: [
+                    "Backup your original coding before changes",
+                    "Clear any stored DTCs after installation",
+                    "Test in various conditions (cold start, traffic)",
+                    "Some 2020+ models may have limited support — verify in app first"
+                ],
+                warnings: "While very popular, ensure you understand local emissions/inspection implications in some regions. The system is designed for fuel economy and emissions compliance.",
+                popularity: 98,
+                compatibility: "Most 4M (verify on 2020+)",
+                recommended: true
+            },
+            {
+                id: 2,
+                name: "Needle Sweep on Ignition",
+                category: "Infotainment",
+                difficulty: "Easy",
+                credits: "10",
+                shortDesc: "Classic Audi/RS gauge sweep animation when turning the ignition on. Adds dramatic flair and presence.",
+                fullDesc: "Enables the instrument cluster needles to perform a full sweep of their range upon ignition — a signature feature on higher RS models that gives the cockpit a more alive, performance-oriented character every time you start the car.",
+                benefits: [
+                    "Instantly elevates perceived quality and sportiness",
+                    "Satisfying, theatrical startup ritual",
+                    "Matches RS and S model character",
+                    "Subtle but unmistakable status signal"
+                ],
+                install: "Often available as a <strong>One-Click App</strong> in OBDeleven. Alternatively: Module 17 (Instruments) → Long Coding → Byte 1, Bit 0 = active. Ignition ON, engine OFF. Apply, then cycle ignition. Very reliable on 4M Q7.",
+                tips: [
+                    "Works on most Virtual Cockpit and analog cluster cars",
+                    "No performance impact whatsoever",
+                    "Can be reversed instantly if desired",
+                    "Pairs beautifully with other cluster customizations"
+                ],
+                warnings: "Purely cosmetic. No functional downside. Ensure your cluster software version supports it.",
+                popularity: 92,
+                compatibility: "All 4M",
+                recommended: true
+            },
+            {
+                id: 3,
+                name: "Passenger Mirror Dip in Reverse",
+                category: "Comfort",
+                difficulty: "Easy",
+                credits: "10-15",
+                shortDesc: "Automatically tilts the passenger mirror downward when selecting reverse gear for perfect curb visibility.",
+                fullDesc: "A highly practical convenience feature. When reverse is engaged, the passenger-side mirror automatically angles down to show the curb and rear wheel — ideal for tight parking, parallel parking, and protecting expensive wheels on your Premium Plus.",
+                benefits: [
+                    "Dramatically improves parking precision",
+                    "Protects alloy wheels from curb rash",
+                    "Feels like a factory luxury feature",
+                    "Especially valuable on large SUVs like the Q7"
+                ],
+                install: "Search for <strong>\"Mirror dip\"</strong> or \"Spiegelabsenkung\" One-Click App in OBDeleven. Long coding route: Module 09 (Central Electrics) or 46 (Comfort) → Adaptations → \"Spiegelverstellung\" or mirror lowering channels. Set \"Spiegelabsenkung bei Rueckwaertsfahrt\" to active. Test in reverse multiple times.",
+                tips: [
+                    "Position the mirror where you want it while in reverse first (it memorizes)",
+                    "Works independently of memory seats in most cases",
+                    "Can usually be toggled via MMI after coding",
+                    "Very high success rate on 4M platform"
+                ],
+                warnings: "Ensure mirror motors and wiring are in good condition. Rare cases of mirror motor strain if over-adjusted.",
+                popularity: 89,
+                compatibility: "All 4M",
+                recommended: true
+            },
+            {
+                id: 4,
+                name: "G-Meter in Virtual Cockpit",
+                category: "Performance",
+                difficulty: "Easy",
+                credits: "10",
+                shortDesc: "Adds real-time lateral and longitudinal G-force display to the Virtual Cockpit. Pure driver engagement.",
+                fullDesc: "Brings a motorsport-inspired G-Meter directly into your digital instrument cluster. Displays acceleration forces in real time — perfect for spirited driving, track days, or simply understanding vehicle dynamics on your powerful Q7.",
+                benefits: [
+                    "Increases driver engagement and awareness",
+                    "Great for performance driving feedback",
+                    "Looks extremely technical and premium",
+                    "No impact on other cluster functions"
+                ],
+                install: "Typically a <strong>One-Click App</strong> or Module 17 (Instruments) long coding. Search \"G-Meter\" or \"G force display\" in OBDeleven. Activate the accelerometer visualization in the cluster configuration. Requires Virtual Cockpit hardware (standard on Premium Plus).",
+                tips: [
+                    "Best experienced in Dynamic or Individual drive mode",
+                    "Can be hidden/shown via steering wheel controls",
+                    "Pairs excellently with RS Monitor activation",
+                    "Accurate enough for enthusiast use"
+                ],
+                warnings: "Cosmetic/performance display only. Does not affect vehicle stability systems.",
+                popularity: 78,
+                compatibility: "All 4M (Virtual Cockpit equipped)"
+            },
+            {
+                id: 5,
+                name: "Traffic Jam Assist Activation",
+                category: "Safety",
+                difficulty: "Medium",
+                credits: "50-100",
+                shortDesc: "Enables low-speed steering assistance in traffic jams (requires Pre-Sense hardware). Transforms commuting.",
+                fullDesc: "Activates Audi's Traffic Jam Assist — the car can take over steering at low speeds in congested traffic, keeping you centered in the lane while you manage speed with ACC. A transformative semi-autonomous feature for daily driving in the Q7.",
+                benefits: [
+                    "Reduces driver fatigue in stop-and-go traffic",
+                    "Significant comfort upgrade for Premium Plus",
+                    "Uses existing Pre-Sense cameras and radar",
+                    "Feels like a much newer vehicle"
+                ],
+                install: "Requires compatible Pre-Sense hardware. Use OBDeleven to activate via long coding in relevant modules (often 13 or gateway + camera modules). Some versions have One-Click support. Follow vag-coding.net Q7 4M guide exactly for your software version. Professional verification recommended.",
+                tips: [
+                    "Confirm your Q7 has the required Pre-Sense package",
+                    "May require multiple modules to be coded together",
+                    "Test in safe, low-speed conditions first",
+                    "Software version is critical — match exactly"
+                ],
+                warnings: "Safety-critical system. Incorrect coding can disable or impair ADAS functions. Strongly recommend professional installation or very careful cross-referencing. Not for all software versions.",
+                popularity: 71,
+                compatibility: "2018+ with Pre-Sense hardware (verify software)"
+            },
+            {
+                id: 6,
+                name: "Dual Phone Bluetooth Pairing",
+                category: "Convenience",
+                difficulty: "Easy",
+                credits: "10",
+                shortDesc: "Allows simultaneous connection of two smartphones via Bluetooth for calls, media, and navigation.",
+                fullDesc: "Unlocks the ability to have two phones connected at once through the MMI — perfect for shared vehicles, business + personal use, or couples. Switch seamlessly between devices without constant re-pairing.",
+                benefits: [
+                    "Huge quality-of-life improvement",
+                    "Ideal for shared or family Q7s",
+                    "No need for phone switching rituals",
+                    "Feels like a natural modern feature"
+                ],
+                install: "Search <strong>\"Second phone\"</strong> or \"Dual Bluetooth\" in OBDeleven One-Click Apps. Alternatively, Module for MMI/Infotainment → Coding for Bluetooth profiles. Simple activation in most cases on MIB2/MIB3 systems found in Q7 Premium Plus.",
+                tips: [
+                    "Works best with recent phone OS versions",
+                    "Can prioritize one phone for calls/media",
+                    "Very stable once activated",
+                    "No performance or battery impact"
+                ],
+                warnings: "Ensure your MMI software supports the feature. Rare Bluetooth stack issues after activation (easily reversible).",
+                popularity: 85,
+                compatibility: "All 4M (MIB2/MIB3)",
+                recommended: true
+            },
+            {
+                id: 7,
+                name: "Hidden Engineering Menu (Green Menu)",
+                category: "Infotainment",
+                difficulty: "Easy",
+                credits: "10",
+                shortDesc: "Unlocks the advanced hidden MMI engineering menu for deeper diagnostics and customization options.",
+                fullDesc: "Grants access to Audi's internal engineering menu (often called the Green Menu). Provides advanced diagnostics, module information, and additional hidden settings not available in the standard user interface.",
+                benefits: [
+                    "Powerful diagnostic and customization tool",
+                    "Access to service functions and adaptations",
+                    "Professional-level insight into vehicle systems",
+                    "Enables further advanced modifications"
+                ],
+                install: "Usually a simple <strong>One-Click App</strong> or long coding in the MMI control unit (often 5F or 19 Gateway related). Search \"Green Menu\" or \"Engineering Menu\" in OBDeleven. Activation is quick and reversible.",
+                tips: [
+                    "Use with caution — this is a powerful menu",
+                    "Great for checking installed options and coding status",
+                    "Many further mods become easier with this active",
+                    "Exit the menu properly to avoid issues"
+                ],
+                warnings: "Advanced users only. Changing values in the engineering menu without knowledge can cause issues. Always note original values.",
+                popularity: 82,
+                compatibility: "All 4M",
+                recommended: true
+            },
+            {
+                id: 8,
+                name: "Scandinavian DRL + Tail Light Illumination",
+                category: "Lighting",
+                difficulty: "Easy",
+                credits: "10-15",
+                shortDesc: "Makes the rear tail lights illuminate along with the daytime running lights for a more distinctive, premium look.",
+                fullDesc: "Enables the rear lights to act as additional DRLs (Scandinavian-style). Creates a more cohesive, expensive-looking lighting signature and improves visibility from the rear during the day — a subtle but classy upgrade.",
+                benefits: [
+                    "More premium and distinctive light signature",
+                    "Improved rear visibility in daylight",
+                    "Popular European-style aesthetic",
+                    "No extra power draw of consequence"
+                ],
+                install: "Search for <strong>\"Scandinavian DRL\"</strong> or DRL tail light activation in OBDeleven. Long coding typically in Module 09 (Central Electrics) or lighting modules. Byte/bit changes for DRL behavior. Very common and reliable mod.",
+                tips: [
+                    "Check local regulations — some areas prefer specific DRL configs",
+                    "Can often be toggled or adjusted further",
+                    "Pairs well with other lighting customizations",
+                    "Reversible with no trace"
+                ],
+                warnings: "Verify it passes your local vehicle inspection requirements. Some jurisdictions have strict lighting rules.",
+                popularity: 76,
+                compatibility: "All 4M",
+                recommended: true
+            },
+            {
+                id: 9,
+                name: "Efficiency Mode in Audi Drive Select",
+                category: "Performance",
+                difficulty: "Easy",
+                credits: "15",
+                shortDesc: "Adds a dedicated Efficiency drive mode to Audi Drive Select for optimized fuel economy and relaxed driving.",
+                fullDesc: "Introduces an Efficiency profile in the Drive Select system. Adjusts throttle response, transmission behavior, and other parameters for maximum fuel efficiency and a more relaxed character — useful for long highway trips or when prioritizing economy.",
+                benefits: [
+                    "Measurable improvement in real-world MPG",
+                    "Smoother, more relaxed power delivery",
+                    "Great for long-distance or commuting",
+                    "Expands the versatility of Drive Select"
+                ],
+                install: "Search <strong>\"Efficiency mode\"</strong> or Drive Select expansion in OBDeleven One-Click Apps. Long coding in Module 01 (Engine) or gateway for ADS profiles. Many Q7s respond well to this addition.",
+                tips: [
+                    "Combine with ACC for excellent highway efficiency",
+                    "Can be used alongside existing Comfort/Auto/Dynamic modes",
+                    "Monitor consumption in Virtual Cockpit to verify gains",
+                    "Reversible at any time"
+                ],
+                warnings: "Purely a drive mode addition. Does not alter emissions equipment or require tuning.",
+                popularity: 69,
+                compatibility: "Most 4M"
+            },
+            {
+                id: 10,
+                name: "Automatic Electric Parking Brake",
+                category: "Comfort",
+                difficulty: "Easy",
+                credits: "10",
+                shortDesc: "Automatically applies the parking brake when the vehicle is placed in Park or the driver exits.",
+                fullDesc: "Makes the electric parking brake engage automatically under normal parking conditions. One less thing to think about when exiting the vehicle, especially useful on hills or when carrying passengers/loads.",
+                benefits: [
+                    "Added convenience and safety",
+                    "Prevents rolling on inclines",
+                    "Consistent parking brake application",
+                    "Premium \"set it and forget it\" behavior"
+                ],
+                install: "Search for <strong>\"Automatic parking brake\"</strong> in OBDeleven. Adaptation or coding in the EPB module (usually 53) or Comfort module. Straightforward on most 4M Q7s with electric parking brake.",
+                tips: [
+                    "Test on level ground and slight inclines",
+                    "Can usually be overridden manually",
+                    "Works with Auto Hold feature",
+                    "Very reliable once coded"
+                ],
+                warnings: "Ensure the parking brake mechanism is in good health before activating. Not a substitute for proper parking procedure.",
+                popularity: 74,
+                compatibility: "All 4M",
+                recommended: true
+            },
+            {
+                id: 11,
+                name: "RS-Style Dynamic Taillight Animation",
+                category: "Lighting",
+                difficulty: "Medium",
+                credits: "20-40",
+                shortDesc: "Activates sequential or animated turn signal and taillight behavior in RS style (requires compatible rear lights).",
+                fullDesc: "Brings dynamic, sweeping turn signal animation and enhanced lighting sequences to the rear of the Q7 — a signature look of RS models that adds aggression and modernity to the rear end.",
+                benefits: [
+                    "Striking, modern rear lighting signature",
+                    "Increased presence on the road",
+                    "Matches higher-performance Audi aesthetics",
+                    "Subtle but noticeable upgrade"
+                ],
+                install: "Requires compatible taillight hardware (some Premium Plus or aftermarket RS-style lights). Search \"Taillight animation\" or \"RS lights\" in OBDeleven. Often involves Module 46 (Comfort System) long coding for animation sequences. Check vag-coding.net for exact bytes per year.",
+                tips: [
+                    "Confirm your rear lights support animation",
+                    "Some facelift models have better native support",
+                    "Test all functions after coding (brake, turn, reverse)",
+                    "Can be stunning when paired with matrix LED headlights"
+                ],
+                warnings: "Hardware dependent. Incorrect coding on non-compatible lights can cause errors or non-functional signals. Safety-critical lighting — double-check everything.",
+                popularity: 65,
+                compatibility: "2020+ facelift or RS-style taillights equipped"
+            },
+            {
+                id: 12,
+                name: "Lane Assist Always-On / Enhanced",
+                category: "Safety",
+                difficulty: "Medium",
+                credits: "30-60",
+                shortDesc: "Enables or enhances Lane Keep Assist to be more proactive or always active within certain parameters.",
+                fullDesc: "Adjusts Lane Assist behavior for more consistent intervention or the ability to keep it active without constant re-enabling. Improves highway stability and reduces driver workload on long trips.",
+                benefits: [
+                    "More consistent lane centering assistance",
+                    "Reduces need to re-activate on every drive",
+                    "Enhances long-distance comfort",
+                    "Better integration with ACC and Traffic Jam Assist"
+                ],
+                install: "Module coding in camera or ADAS modules (often 13 or A5). Search \"Lane Assist\" in OBDeleven for One-Click options or specific adaptations. Many parameters available (sensitivity, deactivation threshold, etc.). Follow precise guides for your software.",
+                tips: [
+                    "Start with conservative settings",
+                    "Test extensively on highways",
+                    "Can be combined with other ADAS tweaks",
+                    "Some versions allow \"always on\" behavior"
+                ],
+                warnings: "Safety system modification. Improper settings can lead to unexpected behavior or reduced effectiveness. Professional setup recommended if unsure. Always keep hands on wheel as required by law.",
+                popularity: 68,
+                compatibility: "2018+ with compatible ADAS hardware (verify software)"
+            }
+        ]
+
+        let currentFilter = 'All'
+        let currentYearFilter = 'All'
+        let installedMods = JSON.parse(localStorage.getItem('q7InstalledMods') || '[]')
+
+        function updateGarageCount() {
+            const countEl = document.getElementById('garage-count')
+            if (countEl) countEl.textContent = installedMods.length
+        }
+
+        function saveInstalledMods() {
+            localStorage.setItem('q7InstalledMods', JSON.stringify(installedMods))
+            updateGarageCount()
+        }
+
+        function isInstalled(modId) {
+            return installedMods.includes(modId)
+        }
+
+        function toggleInstall(modId) {
+            if (isInstalled(modId)) {
+                installedMods = installedMods.filter(id => id !== modId)
+            } else {
+                installedMods.push(modId)
+            }
+            saveInstalledMods()
+            renderMods() // re-render to update badges
+        }
+
+        function toggleInstallFromModal() {
+            const modal = document.getElementById('modal')
+            const modId = parseInt(modal.dataset.currentModId)
+            if (!modId) return
+
+            toggleInstall(modId)
+            
+            // Update button text
+            const btn = document.getElementById('install-btn')
+            const btnText = document.getElementById('install-btn-text')
+            
+            if (isInstalled(modId)) {
+                btn.classList.add('!bg-emerald-600', '!border-emerald-500', '!text-white')
+                btn.classList.remove('border-zinc-600')
+                btnText.innerHTML = '<i class="fa-solid fa-check mr-2"></i>Installed'
+            } else {
+                btn.classList.remove('!bg-emerald-600', '!border-emerald-500', '!text-white')
+                btn.classList.add('border-zinc-600')
+                btnText.innerHTML = '<i class="fa-solid fa-plus"></i> Mark as Installed'
+            }
+        }
+
+        function filterMods() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase().trim()
+            const grid = document.getElementById('mods-grid')
+            grid.innerHTML = ''
+
+            let filtered = mods
+
+            // Category filter
+            if (currentFilter !== 'All') {
+                if (currentFilter === 'Recommended for 2021') {
+                    filtered = filtered.filter(m => m.recommended === true)
+                } else {
+                    filtered = filtered.filter(m => m.category === currentFilter)
+                }
+            }
+
+            // Year compatibility filter
+            if (currentYearFilter !== 'All') {
+                filtered = filtered.filter(m => {
+                    const comp = (m.compatibility || '').toLowerCase()
+                    if (currentYearFilter === '2015-2019') {
+                        return comp.includes('2015') || comp.includes('all 4m') || comp.includes('most 4m')
+                    }
+                    if (currentYearFilter === '2020+') {
+                        return comp.includes('2020') || comp.includes('all 4m') || comp.includes('most 4m') || comp.includes('facelift') || comp.includes('2018+')
+                    }
+                    return true
+                })
+            }
+
+            // Search filter
+            if (searchTerm.length > 1) {
+                filtered = filtered.filter(m => 
+                    m.name.toLowerCase().includes(searchTerm) || 
+                    m.shortDesc.toLowerCase().includes(searchTerm) ||
+                    m.category.toLowerCase().includes(searchTerm)
+                )
+            }
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full py-16 text-center">
+                        <i class="fa-solid fa-search text-4xl text-zinc-700 mb-4"></i>
+                        <p class="text-zinc-400">No mods match your search.</p>
+                    </div>
+                `
+                return
+            }
+
+            filtered.forEach(mod => {
+                const card = createModCard(mod)
+                grid.appendChild(card)
+            })
+        }
+
+        function createModCard(mod) {
+            const card = document.createElement('div')
+            card.className = `audi-card mod-card rounded-3xl p-6 flex flex-col h-full border border-zinc-800 hover:border-zinc-600 cursor-pointer`
+            
+            const installed = isInstalled(mod.id)
+            
+            let difficultyColor = 'emerald'
+            if (mod.difficulty === 'Medium') difficultyColor = 'amber'
+            if (mod.difficulty === 'Advanced') difficultyColor = 'rose'
+
+            card.innerHTML = `
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <span class="inline-block text-[10px] font-mono px-2.5 py-px rounded bg-zinc-900 border border-zinc-700 text-zinc-400">${mod.category}</span>
+                    </div>
+                    <div class="flex items-center gap-x-1.5">
+                        ${installed ? `
+                            <span class="px-2 py-px text-[10px] rounded-full bg-emerald-900/60 text-emerald-400 flex items-center gap-x-1">
+                                <i class="fa-solid fa-check text-xs"></i>
+                                <span class="font-medium text-xs">INSTALLED</span>
+                            </span>
+                        ` : ''}
+                        ${mod.recommended ? `
+                            <span class="px-2 py-px text-[9px] rounded-full bg-emerald-900 text-emerald-400 flex items-center gap-x-1 font-medium" title="Highly recommended for your 2021 Q7 Premium Plus">
+                                <i class="fa-solid fa-star text-xs"></i>
+                                <span>RECOMMENDED</span>
+                            </span>
+                        ` : ''}
+                        <span class="px-2.5 py-px text-[10px] font-medium rounded-full bg-zinc-900 border border-zinc-700 text-${difficultyColor}-400">${mod.difficulty}</span>
+                        ${mod.compatibility && !mod.compatibility.toLowerCase().includes('all 4m') ? `
+                            <span class="px-2 py-px text-[9px] font-mono rounded-full bg-zinc-800 border border-zinc-600 text-zinc-400" title="${mod.compatibility}">${mod.compatibility.length > 18 ? mod.compatibility.substring(0,16)+'…' : mod.compatibility}</span>
+                        ` : ''}
+                    </div>
+                </div>
+
+                <h4 class="font-semibold text-xl leading-tight tracking-tight mb-3 pr-2">${mod.name}</h4>
+                
+                <p class="text-sm text-zinc-400 line-clamp-3 flex-1">${mod.shortDesc}</p>
+
+                <div class="mt-auto pt-5 flex items-center justify-between border-t border-zinc-800">
+                    <div class="flex items-center gap-x-2 text-xs">
+                        <div class="px-2 py-1 bg-zinc-900 rounded-xl flex items-center gap-x-1 border border-zinc-700">
+                            <i class="fa-solid fa-coins text-amber-400 text-xs"></i>
+                            <span class="font-mono text-amber-400">${mod.credits}</span>
+                        </div>
+                        <div class="text-emerald-400 flex items-center text-xs">
+                            <i class="fa-solid fa-users mr-1 text-xs"></i>
+                            <span>${mod.popularity}</span>
+                        </div>
+                    </div>
+                    
+                    <button onclick="event.stopImmediatePropagation(); showModModal(${mod.id});" 
+                            class="text-xs px-4 py-2 rounded-2xl border border-zinc-600 hover:bg-zinc-800 active:bg-zinc-700 transition-all font-medium flex items-center gap-x-1.5">
+                        <span>Details</span>
+                        <i class="fa-solid fa-chevron-right text-xs"></i>
+                    </button>
+                </div>
+            `
+            
+            card.onclick = () => showModModal(mod.id)
+            return card
+        }
+
+        function renderMods() {
+            const grid = document.getElementById('mods-grid')
+            grid.innerHTML = ''
+            
+            let filtered = mods
+            if (currentFilter !== 'All') {
+                if (currentFilter === 'Recommended for 2021') {
+                    filtered = filtered.filter(m => m.recommended === true)
+                } else {
+                    filtered = filtered.filter(m => m.category === currentFilter)
+                }
+            }
+            if (currentYearFilter !== 'All') {
+                filtered = filtered.filter(m => {
+                    const comp = (m.compatibility || '').toLowerCase()
+                    if (currentYearFilter === '2015-2019') {
+                        return comp.includes('2015') || comp.includes('all 4m') || comp.includes('most 4m')
+                    }
+                    if (currentYearFilter === '2020+') {
+                        return comp.includes('2020') || comp.includes('all 4m') || comp.includes('most 4m') || comp.includes('facelift') || comp.includes('2018+')
+                    }
+                    return true
+                })
+            }
+            
+            filtered.forEach(mod => {
+                const card = createModCard(mod)
+                grid.appendChild(card)
+            })
+        }
+
+        function createCategoryFilters() {
+            const container = document.getElementById('category-filters')
+            const categories = ['All', 'Recommended for 2021', 'Comfort', 'Lighting', 'Infotainment', 'Performance', 'Safety', 'Convenience']
+            
+            container.innerHTML = ''
+            
+            categories.forEach(cat => {
+                const btn = document.createElement('button')
+                btn.className = `filter-pill px-5 py-2 text-sm rounded-3xl border transition-all flex-shrink-0 ${cat === 'All' ? 'active bg-[#C8102E] border-[#C8102E] text-white' : 'border-zinc-700 hover:bg-zinc-900 bg-zinc-950'}`
+                btn.textContent = cat
+                
+                btn.onclick = () => {
+                    currentFilter = cat
+                    
+                    // Update active styles
+                    document.querySelectorAll('#category-filters button').forEach(b => {
+                        if (b.textContent === cat) {
+                            b.classList.add('active', 'bg-[#C8102E]', 'border-[#C8102E]', 'text-white')
+                            b.classList.remove('border-zinc-700', 'hover:bg-zinc-900', 'bg-zinc-950')
+                        } else {
+                            b.classList.remove('active', 'bg-[#C8102E]', 'border-[#C8102E]', 'text-white')
+                            b.classList.add('border-zinc-700', 'hover:bg-zinc-900', 'bg-zinc-950')
+                        }
+                    })
+                    
+                    filterMods()
+                }
+                
+                container.appendChild(btn)
+            })
+        }
+
+        function createYearFilters() {
+            const container = document.getElementById('year-filters')
+            const years = ['All', '2015-2019', '2020+']
+            
+            container.innerHTML = ''
+            
+            years.forEach(year => {
+                const btn = document.createElement('button')
+                const isActive = year === currentYearFilter
+                btn.className = `filter-pill px-4 py-1.5 text-xs rounded-3xl border transition-all flex-shrink-0 ${isActive ? 'active bg-[#C8102E] border-[#C8102E] text-white' : 'border-zinc-700 hover:bg-zinc-900 bg-zinc-950'}`
+                btn.textContent = year === 'All' ? 'All Years' : year
+                
+                btn.onclick = () => {
+                    currentYearFilter = year
+                    
+                    // Update active styles for year filters
+                    document.querySelectorAll('#year-filters button').forEach(b => {
+                        const btnYear = b.textContent === 'All Years' ? 'All' : b.textContent
+                        if (btnYear === year) {
+                            b.classList.add('active', 'bg-[#C8102E]', 'border-[#C8102E]', 'text-white')
+                            b.classList.remove('border-zinc-700', 'hover:bg-zinc-900', 'bg-zinc-950')
+                        } else {
+                            b.classList.remove('active', 'bg-[#C8102E]', 'border-[#C8102E]', 'text-white')
+                            b.classList.add('border-zinc-700', 'hover:bg-zinc-900', 'bg-zinc-950')
+                        }
+                    })
+                    
+                    filterMods()
+                }
+                
+                container.appendChild(btn)
+            })
+        }
+
+        function showModModal(modId) {
+            const mod = mods.find(m => m.id === modId)
+            if (!mod) return
+
+            const modal = document.getElementById('modal')
+            modal.dataset.currentModId = modId
+            
+            // Populate content
+            document.getElementById('modal-title').innerHTML = mod.name
+            document.getElementById('modal-desc').innerHTML = mod.fullDesc
+            
+            // Category badge
+            const catBadge = document.getElementById('modal-category-badge')
+            catBadge.innerHTML = `<span class="px-3 py-1 text-xs rounded-2xl bg-zinc-900 border border-zinc-700">${mod.category}</span>`
+            
+            // Difficulty
+            let diffClass = 'bg-emerald-900 text-emerald-400 border-emerald-800'
+            if (mod.difficulty === 'Medium') diffClass = 'bg-amber-900 text-amber-400 border-amber-800'
+            if (mod.difficulty === 'Advanced') diffClass = 'bg-rose-900 text-rose-400 border-rose-800'
+            
+            document.getElementById('modal-difficulty').innerHTML = `
+                <span class="px-3 py-1 rounded-full border text-xs font-medium ${diffClass}">${mod.difficulty}</span>
+            `
+            
+            document.getElementById('modal-credits').innerHTML = `
+                <span class="flex items-center gap-x-1.5"><i class="fa-solid fa-coins text-amber-400"></i> <span class="font-mono">${mod.credits} credits</span></span>
+            `
+            
+            // Compatibility
+            document.getElementById('modal-compatibility').innerHTML = `
+                <span title="${mod.compatibility || ''}"><i class="fa-solid fa-calendar-alt mr-1 text-xs"></i> ${mod.compatibility || 'All 4M'}</span>
+            `
+            
+            // Benefits
+            const benefitsEl = document.getElementById('modal-benefits')
+            benefitsEl.innerHTML = mod.benefits.map(b => `
+                <div class="flex gap-x-3 items-start">
+                    <i class="fa-solid fa-check text-emerald-400 mt-1 text-xs flex-shrink-0"></i> 
+                    <span class="text-zinc-300">${b}</span>
+                </div>
+            `).join('')
+            
+            // Install
+            document.getElementById('modal-install').innerHTML = mod.install
+            
+            // Tips
+            const tipsEl = document.getElementById('modal-tips')
+            tipsEl.innerHTML = mod.tips.map(t => `
+                <div class="flex gap-x-3">
+                    <i class="fa-solid fa-lightbulb text-emerald-400 mt-0.5 flex-shrink-0"></i>
+                    <span>${t}</span>
+                </div>
+            `).join('')
+            
+            // Warnings
+            const warnWrapper = document.getElementById('modal-warnings-wrapper')
+            const warnEl = document.getElementById('modal-warnings')
+            if (mod.warnings && mod.warnings.length > 5) {
+                warnWrapper.style.display = 'block'
+                warnEl.innerHTML = mod.warnings
+            } else {
+                warnWrapper.style.display = 'none'
+            }
+            
+            // Install button state
+            const installBtn = document.getElementById('install-btn')
+            const btnText = document.getElementById('install-btn-text')
+            
+            installBtn.classList.remove('!bg-emerald-600', '!border-emerald-500', '!text-white')
+            installBtn.classList.add('border-zinc-600')
+            
+            if (isInstalled(modId)) {
+                btnText.innerHTML = '<i class="fa-solid fa-check mr-2"></i>Installed'
+                installBtn.classList.add('!bg-emerald-600', '!border-emerald-500', '!text-white')
+                installBtn.classList.remove('border-zinc-600')
+            } else {
+                btnText.innerHTML = '<i class="fa-solid fa-plus"></i> Mark as Installed'
+            }
+            
+            modal.classList.remove('hidden')
+            modal.classList.add('flex')
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('modal')
+            modal.classList.remove('flex')
+            modal.classList.add('hidden')
+        }
+
+        function showGarage() {
+            const modal = document.getElementById('modal')
+            modal.innerHTML = `
+                <div onclick="event.target.id === 'modal' && closeModal()" class="max-w-lg w-full mx-auto bg-zinc-950 border border-zinc-700 rounded-3xl premium-shadow overflow-hidden">
+                    <div class="px-8 pt-8 pb-6 border-b border-zinc-800 flex justify-between items-center">
+                        <div>
+                            <div class="font-semibold text-2xl tracking-tight">Your Q7 Garage</div>
+                            <div class="text-xs text-zinc-500">Installed modifications</div>
+                        </div>
+                        <button onclick="closeModal()" class="text-zinc-400 hover:text-white p-1"><i class="fa-solid fa-times text-2xl"></i></button>
+                    </div>
+                    
+                    <div class="p-8 max-h-[60vh] overflow-auto" id="garage-content">
+                        <!-- Populated by JS -->
+                    </div>
+                    
+                    <div class="px-8 py-5 bg-zinc-900 border-t border-zinc-800 text-xs flex justify-between items-center">
+                        <div class="text-emerald-400 flex items-center gap-x-2">
+                            <i class="fa-solid fa-shield-halved"></i>
+                            <span>Keep records of all changes</span>
+                        </div>
+                        <button onclick="resetGarage()" class="text-xs px-4 py-2 border border-zinc-600 hover:bg-zinc-800 rounded-2xl">Reset All</button>
+                    </div>
+                </div>
+            `
+            
+            const content = modal.querySelector('#garage-content')
+            
+            if (installedMods.length === 0) {
+                content.innerHTML = `
+                    <div class="text-center py-10">
+                        <i class="fa-solid fa-garage text-5xl text-zinc-700 mb-4"></i>
+                        <p class="text-zinc-400">Your garage is empty.</p>
+                        <p class="text-xs text-zinc-500 mt-1">Install some mods from the collection to track your build.</p>
+                    </div>
+                `
+            } else {
+                let html = '<div class="space-y-3">'
+                installedMods.forEach(id => {
+                    const mod = mods.find(m => m.id === id)
+                    if (!mod) return
+                    html += `
+                        <div class="flex justify-between items-center bg-zinc-900 border border-zinc-700 px-5 py-4 rounded-2xl">
+                            <div>
+                                <div class="font-medium">${mod.name}</div>
+                                <div class="text-xs text-zinc-500">${mod.category} • ${mod.difficulty}</div>
+                            </div>
+                            <button onclick="event.stopImmediatePropagation(); removeFromGarage(${id});" class="text-xs px-4 py-2 rounded-2xl border border-zinc-600 hover:bg-red-950 hover:border-red-900 text-red-400 flex items-center gap-x-2">
+                                <i class="fa-solid fa-trash text-xs"></i>
+                                <span>Remove</span>
+                            </button>
+                        </div>
+                    `
+                })
+                html += '</div>'
+                content.innerHTML = html
+            }
+            
+            modal.classList.remove('hidden')
+            modal.classList.add('flex')
+        }
+
+        function removeFromGarage(modId) {
+            installedMods = installedMods.filter(id => id !== modId)
+            saveInstalledMods()
+            // Refresh garage view
+            showGarage()
+            // Also refresh main grid
+            renderMods()
+        }
+
+        function resetGarage() {
+            if (confirm('Clear all installed mods from your garage?')) {
+                installedMods = []
+                saveInstalledMods()
+                closeModal()
+                renderMods()
+            }
+        }
+
+        function showGettingStarted() {
+            const modal = document.getElementById('modal')
+            modal.innerHTML = `
+                <div onclick="event.target.id === 'modal' && closeModal()" class="max-w-2xl w-full mx-auto bg-zinc-950 border border-zinc-700 rounded-3xl premium-shadow overflow-hidden">
+                    <div class="px-8 pt-8 pb-6">
+                        <div class="flex justify-between">
+                            <div>
+                                <div class="uppercase tracking-[1.5px] text-xs text-[#C8102E]">FIRST STEPS</div>
+                                <div class="heading-font text-3xl tracking-tighter mt-1">Getting Started with OBDeleven</div>
+                            </div>
+                            <button onclick="closeModal()" class="text-zinc-400 hover:text-white"><i class="fa-solid fa-times text-3xl"></i></button>
+                        </div>
+                    </div>
+                    
+                    <div class="px-8 pb-8 space-y-6 text-sm">
+                        <div class="flex gap-5">
+                            <div class="w-8 h-8 flex-shrink-0 rounded-2xl bg-zinc-900 flex items-center justify-center text-[#C8102E] font-mono border border-zinc-700">1</div>
+                            <div class="flex-1">
+                                <div class="font-semibold">Acquire OBDeleven Hardware</div>
+                                <div class="text-zinc-400 mt-1">Purchase a genuine OBDeleven Pro or Ultimate kit. The free version has limited functionality. Pro is highly recommended for credit-based One-Click Apps and advanced long coding.</div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex gap-5">
+                            <div class="w-8 h-8 flex-shrink-0 rounded-2xl bg-zinc-900 flex items-center justify-center text-[#C8102E] font-mono border border-zinc-700">2</div>
+                            <div class="flex-1">
+                                <div class="font-semibold">Download &amp; Update the App</div>
+                                <div class="text-zinc-400 mt-1">Install the official OBDeleven app (iOS/Android). Create an account, update the device firmware, and grant necessary permissions. Connect your device to the OBD-II port (driver's side, under dash).</div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex gap-5">
+                            <div class="w-8 h-8 flex-shrink-0 rounded-2xl bg-zinc-900 flex items-center justify-center text-[#C8102E] font-mono border border-zinc-700">3</div>
+                            <div class="flex-1">
+                                <div class="font-semibold">Identify Your Vehicle</div>
+                                <div class="text-zinc-400 mt-1">The app will read your VIN and identify the exact Q7 configuration. This is critical — coding varies by model year, facelift, and software version. Note your exact software versions in key modules.</div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex gap-5">
+                            <div class="w-8 h-8 flex-shrink-0 rounded-2xl bg-zinc-900 flex items-center justify-center text-[#C8102E] font-mono border border-zinc-700">4</div>
+                            <div class="flex-1">
+                                <div class="font-semibold">Start Simple</div>
+                                <div class="text-zinc-400 mt-1">Begin with popular, low-risk mods like Needle Sweep, Mirror Dip, or Start/Stop deactivation. These have high success rates and are easily reversible. Always create a backup of your original coding in the app before making changes.</div>
+                            </div>
+                        </div>
+                        
+                        <div class="pt-4 border-t border-zinc-800 text-xs text-emerald-400 flex items-start gap-x-3">
+                            <i class="fa-solid fa-info-circle mt-0.5"></i>
+                            <div>Many of the mods in this Codex now have dedicated <strong>One-Click Apps</strong> in the OBDeleven ecosystem. Search within the app using keywords from the mod name for the fastest path.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="px-8 py-5 bg-zinc-900 border-t border-zinc-800 flex justify-end">
+                        <button onclick="closeModal()" class="px-8 py-3 rounded-2xl bg-white text-black text-sm font-semibold active:scale-[0.985]">Got it — Let's explore the mods</button>
+                    </div>
+                </div>
+            `
+            modal.classList.remove('hidden')
+            modal.classList.add('flex')
+        }
+
+        function initializeFilters() {
+            createCategoryFilters()
+            createYearFilters()
+            
+            // Pre-select 2020+ filter for 2021 Q7 owners (can be changed)
+            setTimeout(() => {
+                const yearBtns = document.querySelectorAll('#year-filters button')
+                yearBtns.forEach(btn => {
+                    const val = btn.textContent === 'All Years' ? 'All' : btn.textContent
+                    if (val === '2020+') {
+                        btn.classList.add('active', 'bg-[#C8102E]', 'border-[#C8102E]', 'text-white')
+                        btn.classList.remove('border-zinc-700', 'hover:bg-zinc-900', 'bg-zinc-950')
+                        currentYearFilter = '2020+'
+                        filterMods()
+                    }
+                })
+            }, 300)
+            
+            // Initial render
+            renderMods()
+            
+            // Keyboard support for search
+            const searchInput = document.getElementById('search-input')
+            searchInput.addEventListener('keydown', function(e) {
+                if (e.key === '/' && document.activeElement !== searchInput) {
+                    e.preventDefault()
+                    searchInput.focus()
+                }
+            })
+            
+            // Easter egg: press "?" to show random popular mod
+            document.addEventListener('keydown', function(e) {
+                if (e.key === '?' && document.activeElement.tagName === 'BODY') {
+                    e.preventDefault()
+                    const popular = mods.sort((a,b) => b.popularity - a.popularity)[0]
+                    showModModal(popular.id)
+                }
+            })
+            
+            // Update garage count on load
+            updateGarageCount()
+            
+            // Subtle tip in console for enthusiasts
+            console.log('%c[Q7 Codex] Press "?" on the page for a quick popular mod suggestion.', 'color:#444')
+        }
+
+        function initializeEverything() {
+            initializeTailwind()
+            initializeFilters()
+            
+            // Keyboard hint
+            setTimeout(() => {
+                const search = document.getElementById('search-input')
+                if (search) search.placeholder = "Search mods (e.g. mirror, DRL, start-stop)  •  Press / to focus"
+            }, 1200)
+            
+            // Make sure garage count is accurate
+            updateGarageCount()
+            
+            // Optional: Preload one popular mod hint
+            console.log('%c[Q7 Codex] Welcome. Your Audi Q7 Premium Plus deserves the best.', 'color:#C8102E')
+        }
+
+        // Boot the app
+        window.onload = initializeEverything
+    </script>
+</body>
+</html>
